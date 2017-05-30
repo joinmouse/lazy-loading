@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    .ct {
+      margin: 0 auto;
+      width: 1200px;
+    }
+    .clearfix::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .ct li {
+      list-style: none;
+      height: 400px;
+      width:300px;
+      float: left;
+      margin: 20px;
+    }
+    
+  </style>
+</head>
+<body>
+  
+<ul class="ct clearfix">
+  <li><a href="#"><img data-src="image/1.JPG"></a></li>
+  <li><a href="#"><img data-src="image/2.JPG"></a></li>
+  <li><a href="#"><img data-src="image/3.JPG"></a></li>
+  <li><a href="#"><img data-src="image/4.JPG"></a></li>
+  <li><a href="#"><img data-src="image/5.JPG"></a></li>
+  <li><a href="#"><img data-src="image/6.JPG"></a></li>
+  <li><a href="#"><img data-src="image/7.JPG"></a></li>
+  <li><a href="#"><img data-src="image/8.JPG"></a></li>
+  <li><a href="#"><img data-src="image/9.JPG"></a></li>
+  <li><a href="#"><img data-src="image/10.JPG"></a></li>
+  <li><a href="#"><img data-src="image/11.JPG"></a></li>
+  <li><a href="#"><img data-src="image/12.JPG"></a></li>
+  <li><a href="#"><img data-src="image/13.JPG"></a></li>
+  <li><a href="#"><img data-src="image/14.JPG"></a></li>
+  <li><a href="#"><img data-src="image/15.JPG"></a></li>
+  <li><a href="#"><img data-src="image/16.JPG"></a></li>
+  <li><a href="#"><img data-src="image/17.JPG"></a></li>
+  <li><a href="#"><img data-src="image/18.JPG"></a></li>
+</ul>
+
+  <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+  <script>
+
+//加载逻辑,遍历img->判断是否符合加载条件->加载显示
+  $(window).on('scroll',function(){
+    $('.ct img').each(function(){
+      if(isShow($(this))){
+        showImg($(this));
+      }
+    })
+  })
+
+
+//1、定义加载图片
+    function showImg($imgs){
+      $imgs.each(function(){
+        var url = $(this).attr('data-src')
+        $(this).attr('src',url)
+      })
+    }
+
+//2、判断何时加载
+    function isShow($node){
+    //获取浏览器窗口高度、滑动距离、元素在文档中与top点距离、元素高度
+      var windowHeight = $(window).height()
+          scrollTop = $(window).scrollTop()
+          offsetTop = $node.offset().top
+          nodeHeight = $node.height()
+    //windowHeight+scrollTop=offsetTop是被选定元素出现的临界点
+    //scrollTop=offsetTop+nodeHeight是被选定元素离开的临界点
+      if((windowHeight+scrollTop>offsetTop) && (scrollTop<offsetTop+nodeHeight)){
+          return true
+      }else{
+          return false
+      }
+    }
+  </script>
+</body>
+</html>
