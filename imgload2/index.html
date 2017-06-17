@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    .ct {
+      margin: 0 auto;
+      width: 1200px;
+    }
+    .clearfix::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .ct li {
+      list-style: none;
+      height: 400px;
+      width:300px;
+      float: left;
+      margin: 20px;
+    }
+    
+  </style>
+</head>
+<body>
+  
+<ul class="ct clearfix">
+  <li><a href="#"><img data-src="img/1.JPG"></a></li>
+  <li><a href="#"><img data-src="img/2.JPG"></a></li>
+  <li><a href="#"><img data-src="img/3.JPG"></a></li>
+  <li><a href="#"><img data-src="img/4.JPG"></a></li>
+  <li><a href="#"><img data-src="img/5.JPG"></a></li>
+  <li><a href="#"><img data-src="img/6.JPG"></a></li>
+  <li><a href="#"><img data-src="img/7.JPG"></a></li>
+  <li><a href="#"><img data-src="img/8.JPG"></a></li>
+  <li><a href="#"><img data-src="img/9.JPG"></a></li>
+  <li><a href="#"><img data-src="img/10.JPG"></a></li>
+  <li><a href="#"><img data-src="img/11.JPG"></a></li>
+  <li><a href="#"><img data-src="img/12.JPG"></a></li>
+  <li><a href="#"><img data-src="img/13.JPG"></a></li>
+  <li><a href="#"><img data-src="img/14.JPG"></a></li>
+  <li><a href="#"><img data-src="img/15.JPG"></a></li>
+  <li><a href="#"><img data-src="img/16.JPG"></a></li>
+  <li><a href="#"><img data-src="img/17.JPG"></a></li>
+  <li><a href="#"><img data-src="img/18.JPG"></a></li>
+</ul>
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+
+
+var Lazyload = function(img){
+  this.target = img
+  this.addEvent();
+}
+Lazyload.prototype.addEvent = function(){
+  var that = this 
+  var target = this.target
+  $(window).on('scroll',function(){
+      //检查以下是否加载当前图片，检查当前图片是否在显示区域
+      var windowHeight = $(window).height()
+      var scrollTop = $(window).scrollTop()
+      var offsetTop = target.offset().top
+      var nodeHeight = target.height()
+      //通过条件判断什么情况下加载图片
+      var condition1 = scrollTop<offsetTop+nodeHeight
+      var condition2 = scrollTop>offsetTop-windowHeight
+      if(condition1&&condition2) {
+        that.triggerLoad()
+      }
+  })
+}
+Lazyload.prototype.triggerLoad = function(){
+    var target = this.target
+    console.log(target)
+    var url = target.attr('data-src')
+    console.log(url)
+    var img = new Image()
+    img.onload = function(){
+      target.attr('src',url)
+    }
+    img.src = url
+}
+
+//挂载事件
+$('.ct').find('img') .each(function(){
+  new Lazyload($(this))
+})
+
+  </script>
+</body>
+</html>
